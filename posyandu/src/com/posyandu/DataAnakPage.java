@@ -7,11 +7,41 @@ import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
 
 public class DataAnakPage extends JFrame {
     private JTextField searchField;
     private JTable dataTable;
     private DefaultTableModel tableModel;
+    
+   private void loadData() {
+    String sql = "SELECT * FROM data_anak";
+
+    try (Connection conn = DatabaseConnection.connect();
+         Statement stmt = conn.createStatement();
+         ResultSet rs = stmt.executeQuery(sql)) {
+
+        while (rs.next()) {
+            String nama = rs.getString("nama");
+            String nik = rs.getString("nik");
+            String tanggalLahir = rs.getString("tanggal_lahir");
+            String jenisKelamin = rs.getString("jenis_kelamin");
+            String namaOrtu = rs.getString("nama_ortu");
+            String noTelpon = rs.getString("no_telpon");
+            String alamat = rs.getString("alamat");
+            String beratBadan = rs.getString("berat_badan");
+            String tinggiBadan = rs.getString("tinggi_badan");
+            String lingkarKepala = rs.getString("lingkar_kepala");
+
+            tableModel.addRow(new Object[]{nama, nik, tanggalLahir, jenisKelamin, namaOrtu, noTelpon, alamat, beratBadan, tinggiBadan, lingkarKepala});
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Gagal memuat data: " + e.getMessage());
+    }
+}
 
     public DataAnakPage() {
         // Set up the frame
@@ -24,7 +54,7 @@ public class DataAnakPage extends JFrame {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout(10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        panel.setBackground(new Color(255, 223, 186)); // Lighter and more cheerful background color
+        panel.setBackground(new Color(255, 223, 186));
         add(panel);
 
         // Header
@@ -32,7 +62,7 @@ public class DataAnakPage extends JFrame {
         headerPanel.setBackground(Color.WHITE);
 
         JLabel titleLabel = new JLabel("Data Anak");
-        titleLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 36)); // More cheerful and larger font
+        titleLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 36));
         titleLabel.setForeground(new Color(34, 139, 34));
 
         headerPanel.add(titleLabel);
@@ -40,7 +70,7 @@ public class DataAnakPage extends JFrame {
 
         // Content Panel
         JPanel contentPanel = new JPanel();
-        contentPanel.setBackground(new Color(255, 223, 186)); // Same background color
+        contentPanel.setBackground(new Color(255, 223, 186));
         contentPanel.setLayout(new BorderLayout(10, 10));
         panel.add(contentPanel, BorderLayout.CENTER);
 
@@ -91,7 +121,7 @@ public class DataAnakPage extends JFrame {
         topPanel.add(searchPanel, BorderLayout.EAST);
 
         // Table
-        String[] columnNames = {"Nama", "NIK", "Tanggal Lahir", "Jenis Kelamin", "Nama Orang Tua", "No Telpon", "Alamat Lengkap", "Berat Badan", "Tinggi Badan", "Lingkar Kepala", "Riwayat Imunisasi", "Riwayat Penyakit"};
+        String[] columnNames = {"Nama", "NIK", "Tanggal Lahir", "Jenis Kelamin", "Nama Ortu", "No Telpon","Alamat", "BB", "TB", "LK"};
         tableModel = new DefaultTableModel(columnNames, 0);
         dataTable = new JTable(tableModel);
 
@@ -125,6 +155,7 @@ public class DataAnakPage extends JFrame {
 
         // Make the frame visible
         setVisible(true);
+        loadData();
     }
 
     private void filterTable(String searchText) {
@@ -133,8 +164,8 @@ public class DataAnakPage extends JFrame {
         sorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
     }
 
-    public void addChildData(String nama, String nik, String tanggalLahir, String jenisKelamin, String namaOrtu, String noTelpon, String alamat, String beratBadan, String tinggiBadan, String lingkarKepala, String riwayatImunisasi, String riwayatPenyakit) {
-        tableModel.addRow(new Object[]{nama, nik, tanggalLahir, jenisKelamin, namaOrtu, noTelpon, alamat, beratBadan, tinggiBadan, lingkarKepala, riwayatImunisasi, riwayatPenyakit});
+    public void addChildData(String nama, String nik, String tanggalLahir, String jenisKelamin, String namaOrtu, String noTelpon, String beratBadan, String tinggiBadan, String lingkarKepala) {
+        tableModel.addRow(new Object[]{nama, nik, tanggalLahir, jenisKelamin, namaOrtu, noTelpon, beratBadan, tinggiBadan, lingkarKepala});
     }
 
     public static void main(String[] args) {

@@ -16,7 +16,7 @@ public class MainPage extends JFrame {
         // Create the main panel
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
-        panel.setBackground(new Color(255, 223, 186)); // Lighter and more cheerful background color
+        panel.setBackground(new Color(255, 223, 186));
         add(panel);
 
         // Header
@@ -26,12 +26,12 @@ public class MainPage extends JFrame {
         // Load and scale the logo image
         ImageIcon originalLogoIcon = new ImageIcon("C:\\Users\\rian yuliawan\\OneDrive\\Dokumen\\posyandu\\src\\com\\posyandu\\asset\\LogoPosyandu.png");
         Image originalLogoImage = originalLogoIcon.getImage();
-        Image scaledLogoImage = originalLogoImage.getScaledInstance(60, 60, Image.SCALE_SMOOTH); // Increased size
+        Image scaledLogoImage = originalLogoImage.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
         ImageIcon scaledLogoIcon = new ImageIcon(scaledLogoImage);
 
         JLabel logoLabel = new JLabel(scaledLogoIcon);
         JLabel titleLabel = new JLabel("Posyandu Ceria");
-        titleLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 36)); // More cheerful and larger font
+        titleLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 36));
         titleLabel.setForeground(new Color(34, 139, 34));
 
         headerPanel.add(logoLabel);
@@ -39,9 +39,9 @@ public class MainPage extends JFrame {
         panel.add(headerPanel, BorderLayout.NORTH);
 
         // Button Panel
-        JPanel buttonPanel = new JPanel(new GridLayout(2, 2, 40, 40)); // Adjusted to 2x2 grid
+        JPanel buttonPanel = new JPanel(new GridLayout(2, 2, 40, 40));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        buttonPanel.setBackground(new Color(255, 223, 186)); // Same background color
+        buttonPanel.setBackground(new Color(255, 223, 186));
         panel.add(buttonPanel, BorderLayout.CENTER);
 
         // Buttons without icons
@@ -62,25 +62,25 @@ public class MainPage extends JFrame {
 
     private JButton createButton(String text, Color color) {
         JButton button = new JButton(text);
-        button.setFont(new Font("Comic Sans MS", Font.BOLD, 24)); // Larger and more cheerful font
+        button.setFont(new Font("Comic Sans MS", Font.BOLD, 24));
         button.setForeground(Color.WHITE);
         button.setBackground(color);
         button.setFocusPainted(false);
-        button.setPreferredSize(new Dimension(200, 200)); // Larger size
+        button.setPreferredSize(new Dimension(200, 200));
 
         // Set button with rounded corners and shadow effect
-        button.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Removed white border
+        button.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         button.setUI(new RoundedButtonUI());
 
         // Adding hover effect
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 button.setBackground(color.darker());
-                button.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Change cursor to hand
+                button.setCursor(new Cursor(Cursor.HAND_CURSOR));
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 button.setBackground(color);
-                button.setCursor(new Cursor(Cursor.DEFAULT_CURSOR)); // Change cursor back to default
+                button.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         });
 
@@ -144,10 +144,7 @@ class RoundedButtonUI extends javax.swing.plaf.basic.BasicButtonUI {
         g2.setColor(c.getBackground());
         g2.fillRoundRect(0, yOffset, size.width, size.height + yOffset - 2, 30, 30);
         // Adding a thicker shadow effect
-        g2.setColor(new Color(0, 0, 0, 50)); // Shadow color
+        g2.setColor(new Color(0, 0, 0, 50));
         g2.fillRoundRect(5, 5, size.width, size.height, 30, 30);
     }
 }
-
-
-
